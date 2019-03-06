@@ -1,40 +1,29 @@
-import React, { Component } from "react";
-import MonacoEditor, { MonacoDiffEditor } from "react-monaco-editor";
+import React, { Component, FunctionComponent } from "react";
+import Monaco from "./component/molecules/monaco";
+import GridLayout from "react-grid-layout";
 
-class App extends Component<{}, { code: string; originalCode: string }> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      code: "// type your code...",
-      originalCode: "function f()\n{  console.info('hi');\n}\n"
-    };
-  }
-  editorDidMount = (editor: any, monaco: any) => {
-    console.log("editorDidMount", editor);
-    editor.focus();
-  };
-  onChange = (newValue: any, e: any) => {
-    console.log("onChange", newValue, e);
-  };
-  render() {
-    const { code, originalCode } = this.state;
-    const options = {
-      selectOnLineNumbers: true
-    };
-    return (
-      <div>
-        <MonacoEditor
-          height="600"
-          language="javascript"
-          theme="vs-light"
-          value={code}
-          options={options}
-          onChange={this.onChange}
-          editorDidMount={this.editorDidMount}
-        />
+const layout = [
+  { i: "a", x: 0, y: 0, w: 2, h: 2 },
+  { i: "b", x: 1, y: 0, w: 3, h: 2 },
+  { i: "c", x: 4, y: 0, w: 1, h: 2 }
+];
+
+const App: FunctionComponent = () => {
+  return (
+    <GridLayout
+      className="layout"
+      layout={layout}
+      cols={12}
+      rowHeight={60}
+      width={1200}
+    >
+      <div key="a">
+        <Monaco />
       </div>
-    );
-  }
-}
+      <div key="b">b</div>
+      <div key="c">c</div>
+    </GridLayout>
+  );
+};
 
 export default App;
